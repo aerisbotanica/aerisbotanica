@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AERIS BOTÁNICA</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+    <header class="header">
+
+    <h1>AERIS BOTÁNICA</h1>
+
+    <nav>
+
+        <a href="index.html">Inicio</a>
+
+        <a href="#catalogo">Catálogo</a>
+    
+        <a href="#cuidados">Cuidados</a>
+
+        <a href="#contacto">Contacto</a>
+
+    </nav>
+
+</header>
+
+    <section class="portada">
+        <h2>La naturaleza en un pequeño ecosistema</h2>
+        <p>
+            Creamos terrarios únicos para decorar hogares, oficinas y regalar en ocasiones especiales.
+        </p>
+
+        <button onclick="document.getElementById('catalogo').scrollIntoView({behavior:'smooth'})">
+    Ver catálogo
+</button>
+    </section>
+    <section id="nosotros">
+
+    <h2>¿Quiénes somos?</h2>
+
+    <p>
+        En <strong>AERIS BOTÁNICA</strong> elaboramos terrarios naturales hechos a mano.
+        Cada diseño es único y busca llevar un pequeño ecosistema a tu hogar u oficina.
+        Trabajamos con plantas cuidadosamente seleccionadas para crear espacios llenos de vida y naturaleza.
+    </p>
+
+</section>
+<section id="catalogo">
+    <h2>Nuestros Terrarios</h2>
+    
+    <label for="filtroCategoria">Categoría:</label>
+
+
+
+    <input
+    type="text"
+    id="buscar"
+    placeholder="🔍 Buscar terrario..."
+    onkeyup="buscarProducto()">
+
+    <div class="productos"
+    id="listaProductos">
+        
+
+    </div>
+<section id="cuidados">
+
+<h2>Guía de cuidados</h2>
+
+<div class="cuidados">
+
+<div>
+
+<h3>☀️ Luz</h3>
+
+<p>Colócalo en un lugar con luz indirecta.</p>
+
+</div>
+
+<div>
+
+<h3>💧 Agua</h3>
+
+<p>No abras el terrario innecesariamente.</p>
+
+</div>
+
+<div>
+
+<h3>🌡 Temperatura</h3>
+
+<p>Entre 18° y 28° C.</p>
+
+</div>
+
+</div>
+
+</section>
+<section id="entregas">
+
+    <h2>Puntos de entrega</h2>
+
+    <div class="puntos">
+
+        <div>
+            <h3>📍 Teatro Bellas Artes</h3>
+            <p>Punto de entrega previamente acordado.</p>
+        </div>
+
+        <div>
+            <h3>⛽ Gasolinera Puma Zona 10</h3>
+            <p>Entrega según disponibilidad de rutas.</p>
+        </div>
+
+    </div>
+
+</section>
+</section>
+<div id="pedido" class="modal">
+
+    <div class="formulario">
+
+        <span id="cerrar">×</span>
+
+        <h2>Realizar pedido</h2>
+
+        <form onsubmit="enviarPedido(event)">
+
+            <label>Producto:</label>
+            <input id="producto" readonly>
+
+            <label>Código:</label>
+            <input id="codigo" readonly>
+
+            <label>Nombre:</label>
+            <input type="text" placeholder="Tu nombre">
+
+            <label>Correo:</label>
+            <input type="email" placeholder="Tu correo">
+
+            <label>Punto de entrega:</label>
+            <select>
+                <option>Frente al Teatro Bellas Artes</option>
+                <option>Gasolinera Puma Zona 10</option>
+            </select>
+
+            <label>Fecha de entrega:</label>
+            <input type="date">
+
+            <button type="submit">
+                Enviar pedido
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+<div id="visor" class="visor">
+    <span id="cerrarVisor">&times;</span>
+    <img id="imagenGrande">
+</div>
+<footer id="contacto">
+
+    <h2>Contáctanos</h2>
+
+    <p>📧 Correo: aerisbotanica@gmail.com</p>
+
+    <p>📱 WhatsApp: +502 XXXXXXXX</p>
+
+    <p>📍 Guatemala</p>
+
+    <p>🌿 Gracias por apoyar AERIS BOTÁNICA</p>
+
+    <p class="copyright">
+        © 2026 AERIS BOTÁNICA - Todos los derechos reservados.
+    </p>
+
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script src="productos.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>
