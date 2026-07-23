@@ -420,33 +420,80 @@ footer p{
 
 }
 
-/* Adaptación para celulares */
-@media (max-width: 768px) {
 
-    .header h1 {
-        font-size: 28px;
+/* Diseño para celulares */
+@media (max-width: 768px){
+
+    .header{
+        flex-direction:column;
+        padding:15px;
+        text-align:center;
     }
 
-    .productos {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+    .header nav{
+        flex-direction:column;
+        gap:10px;
+        margin-top:15px;
     }
 
-    .producto {
-        width: 90%;
-        margin-bottom: 20px;
+    .portada{
+        height:auto;
+        min-height:400px;
+        padding:40px 20px;
     }
 
-    .producto img {
-        width: 100%;
-        height: auto;
+    .portada h2{
+        font-size:32px;
     }
 
-    button {
-        width: 100%;
-        padding: 15px;
-        font-size: 16px;
+    .portada p{
+        width:100%;
+        font-size:17px;
+    }
+
+    #catalogo{
+        padding:30px 15px;
+    }
+
+    #catalogo h2{
+        font-size:28px;
+    }
+
+    .productos{
+        flex-direction:column;
+        align-items:center;
+    }
+
+    .producto{
+        width:95%;
+    }
+
+    .producto img{
+        height:auto;
+    }
+
+    .detalle{
+        flex-direction:column;
+        padding:20px;
+    }
+
+    .galeria img{
+        width:100%;
+    }
+
+    .info{
+        width:100%;
+    }
+
+    .formulario{
+        width:90%;
+        max-height:90vh;
+        overflow-y:auto;
+    }
+
+    #cuidados,
+    #entregas{
+        padding:40px 15px;
     }
 
 }
