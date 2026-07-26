@@ -20,14 +20,16 @@ function enviarPedido(event){
     event.preventDefault();
 
     let datos = {
-        nombre: document.querySelector('input[placeholder="Tu nombre"]').value,
-        correo: document.querySelector('input[placeholder="Tu correo"]').value,
-        producto: document.getElementById("producto").value,
-        codigo: document.getElementById("codigo").value,
-        punto: document.querySelector("select").value,
-        fecha: document.querySelector('input[type="date"]').value
-    };
-
+    nombre: document.querySelector('input[placeholder="Tu nombre"]').value,
+    correo: document.querySelector('input[placeholder="Tu correo"]').value,
+    telefono: document.getElementById("telefono").value,
+    producto: document.getElementById("producto").value,
+    codigo: document.getElementById("codigo").value,
+    punto: document.getElementById("puntoEntrega").value === "otro"
+        ? document.getElementById("otroPunto").value
+        : document.getElementById("puntoEntrega").value,
+    fecha: document.querySelector('input[type="date"]').value
+};
 
     emailjs.send(
         "service_v9aox9k",
@@ -36,11 +38,13 @@ function enviarPedido(event){
     )
     .then(function(){
 
-        alert("¡Pedido enviado correctamente! 🌿");
+    alert("¡Pedido enviado correctamente! 🌿");
 
-        document.getElementById("pedido").style.display = "none";
+    document.querySelector("form").reset();
 
-    })
+    document.getElementById("pedido").style.display = "none";
+
+})
     .catch(function(error){
 
         alert("Ocurrió un error al enviar el pedido.");
@@ -129,7 +133,7 @@ onclick="verDetalle('${producto.codigo}')">
     </p>
 
     <p>
-        📏 ${producto.tamaño}
+        Tamaño: ${producto.tamaño}
     </p>
 
     <p class="precio">
@@ -150,7 +154,13 @@ onclick="verDetalle('${producto.codigo}')">
 
         Hacer pedido
 
-        </button>`
+        </button>
+        
+        <button class="btn-copiar"
+onclick="copiarInformacion('${producto.nombre}','${producto.codigo}','${producto.precio}')">
+ Copiar información
+</button>`
+       
     }
 
 </div>
@@ -166,4 +176,42 @@ function verDetalle(codigo){
 
     window.location.href = "detalle.html?codigo=" + codigo;
 
+}
+
+function cerrarPedido(){
+
+    document.getElementById("pedido").style.display = "none";
+
+}
+function mostrarOtroPunto(){
+
+    const select = document.getElementById("puntoEntrega");
+    const div = document.getElementById("otroPuntoDiv");
+    const input = document.getElementById("otroPunto");
+
+    if(select.value === "otro"){
+        div.style.display = "block";
+        input.required = true;
+    }else{
+        div.style.display = "none";
+        input.required = false;
+        input.value = "";
+    }
+
+}
+
+function copiarInformacion(nombre, codigo, precio){
+
+    const texto =
+`🌿 AERIS BOTÁNICA
+
+Producto: ${nombre}
+Código: ${codigo}
+Precio: Q${precio}
+
+Me interesa este terrario. 😊`;
+
+    navigator.clipboard.writeText(texto);
+
+    alert("La información del terrario se copió al portapapeles.");
 }

@@ -27,9 +27,7 @@ if(producto){
 
         <p><strong>Estado:</strong> ${producto.estado}</p>
 
-        <button onclick="abrirPedido('${producto.nombre}','${producto.codigo}')">
-            Hacer pedido
-        </button>
+        
 
     </div>
 
