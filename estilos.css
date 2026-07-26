@@ -606,5 +606,16 @@ footer p{
         flex-direction:column;
 
     }
+    #menu a{
+
+    color:white;
+
+    text-decoration:none;
+
+    padding:10px;
+
+    font-size:18px;
+
+}
 
 }
