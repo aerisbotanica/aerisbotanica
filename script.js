@@ -218,16 +218,6 @@ Me interesa este terrario. 😊`;
 
 function toggleMenu(){
 
-    let menu = document.getElementById("menu");
-
-    if(menu.classList.contains("activo")){
-
-        menu.classList.remove("activo");
-
-    }else{
-
-        menu.classList.add("activo");
-
-    }
+    document.querySelector(".header nav").classList.toggle("activo");
 
 }
