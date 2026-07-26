@@ -567,13 +567,16 @@ footer p{
 
     .menu-btn{
     display:block;
-    font-size:30px;
-    background:none;
+    width:45px;
+    height:45px;
+    font-size:22px;
+    background:#4caf7d;
     border:none;
+    border-radius:10px;
     color:white;
     cursor:pointer;
+    padding:0;
 }
-
 .header nav{
     display:none;
     flex-direction:column;
