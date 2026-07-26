@@ -215,3 +215,19 @@ Me interesa este terrario. 😊`;
 
     alert("La información del terrario se copió al portapapeles.");
 }
+
+function toggleMenu(){
+
+    let menu = document.getElementById("menu");
+
+    if(menu.classList.contains("activo")){
+
+        menu.classList.remove("activo");
+
+    }else{
+
+        menu.classList.add("activo");
+
+    }
+
+}
