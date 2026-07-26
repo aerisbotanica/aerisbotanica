@@ -549,3 +549,12 @@ footer p{
     cursor:pointer;
 
 }
+
+@media (max-width: 768px){
+
+    .logo{
+        width: 120px;
+        height: auto;
+    }
+
+}
