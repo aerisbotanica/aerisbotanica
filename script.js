@@ -153,9 +153,9 @@ function mostrarProducto(indice){
             <div class="imagen-producto">
 
     <img
-        src="${productoActualData.imagenes[0]}"
-        alt="${productoActualData.nombre}"
-        onclick="alternarInformacionProducto()">
+    class="foto-producto"
+    src="${productoActualData.imagenes[0]}"
+    alt="${productoActualData.nombre}">
 
     <button
         class="copiar-imagen"
@@ -282,7 +282,11 @@ function productoSiguiente(){
     }, 250);
 
 }
-cargarProductos();
+document.addEventListener("DOMContentLoaded", function(){
+
+    cargarProductos();
+
+});
 
 function verDetalle(codigo){
 
@@ -334,69 +338,6 @@ function toggleMenu(){
 
 }
 
-/* =========================================
-   CARRUSEL TOUCH PARA CELULAR
-   AERIS BOTÁNICA
-   ========================================= */
-
-let touchInicioX = 0;
-let touchFinX = 0;
-let moviendoTouch = false;
-
-const carruselTouch = document.querySelector(".carrusel");
-
-if (carruselTouch) {
-
-    carruselTouch.addEventListener("touchstart", function(event){
-
-        if (event.touches.length !== 1) return;
-
-        touchInicioX = event.touches[0].clientX;
-        moviendoTouch = true;
-
-    }, { passive: true });
-
-
-    carruselTouch.addEventListener("touchmove", function(event){
-
-        if (!moviendoTouch) return;
-
-        touchFinX = event.touches[0].clientX;
-
-    }, { passive: true });
-
-
-    carruselTouch.addEventListener("touchend", function(){
-
-        if (!moviendoTouch) return;
-
-        const diferencia = touchFinX - touchInicioX;
-
-        const distanciaMinima = 50;
-
-        if (Math.abs(diferencia) >= distanciaMinima) {
-
-            if (diferencia < 0) {
-
-                // Deslizar hacia la izquierda
-                productoSiguiente();
-
-            } else {
-
-                // Deslizar hacia la derecha
-                productoAnterior();
-
-            }
-
-        }
-
-        touchInicioX = 0;
-        touchFinX = 0;
-        moviendoTouch = false;
-
-    });
-
-}
 
 /* Ocultar aviso después de unos segundos */
 
@@ -421,17 +362,6 @@ setTimeout(function(){
 
 }, 4500);
 
-function alternarInformacionProducto(){
-
-    const informacion = document.querySelector(
-        ".producto-carrusel .informacion-imagen"
-    );
-
-    if(!informacion) return;
-
-    informacion.classList.toggle("visible");
-
-}
 
 function alternarInformacionProducto(){
 
@@ -440,9 +370,87 @@ function alternarInformacionProducto(){
     );
 
     if(!informacion){
+
+        console.log("No se encontró la información del producto.");
+
         return;
     }
 
     informacion.classList.toggle("visible");
 
 }
+
+/* =========================================
+   TOUCH DEL CATÁLOGO
+   ========================================= */
+
+let inicioX = 0;
+let inicioY = 0;
+
+document.addEventListener("touchstart", function(event){
+
+    const foto = event.target.closest(".foto-producto");
+
+    if(!foto){
+        return;
+    }
+
+    inicioX = event.touches[0].clientX;
+    inicioY = event.touches[0].clientY;
+
+}, {passive:true});
+
+
+document.addEventListener("touchend", function(event){
+
+    const foto = event.target.closest(".foto-producto");
+
+    if(!foto){
+        return;
+    }
+
+    const finalX = event.changedTouches[0].clientX;
+    const finalY = event.changedTouches[0].clientY;
+
+    const diferenciaX = finalX - inicioX;
+    const diferenciaY = finalY - inicioY;
+
+    /*
+       Si prácticamente no hubo movimiento,
+       se considera un TOQUE.
+    */
+
+    if(
+        Math.abs(diferenciaX) < 30 &&
+        Math.abs(diferenciaY) < 30
+    ){
+
+        alternarInformacionProducto();
+
+        return;
+    }
+
+    /*
+       Si hubo movimiento horizontal,
+       se considera DESLIZAMIENTO.
+    */
+
+    if(Math.abs(diferenciaX) > Math.abs(diferenciaY)){
+
+        if(Math.abs(diferenciaX) > 50){
+
+            if(diferenciaX < 0){
+
+                productoSiguiente();
+
+            }else{
+
+                productoAnterior();
+
+            }
+
+        }
+
+    }
+
+});
