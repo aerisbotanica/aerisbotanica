@@ -659,6 +659,10 @@ footer p{
     justify-content:center;
 
     text-align:center;
+
+    background:transparent;
+    border:none;
+    box-shadow:none;
 }
 
 .producto-carrusel{
@@ -673,14 +677,20 @@ footer p{
 }
 
 .producto-carrusel img{
-    width:420px;
-    height:420px;
+    width:460px;
+    height:460px;
 
     object-fit:contain;
 
     cursor:pointer;
 
-    transition:transform .3s ease;
+    transition:transform .4s ease, filter .4s ease;
+
+    filter:drop-shadow(0 15px 20px rgba(0,0,0,.12));
+}
+
+.producto-carrusel img:hover{
+    transform:scale(1.05);
 }
 
 .producto-carrusel img:hover{
@@ -862,6 +872,106 @@ footer p{
     .btn-pedido,
     .btn-copiar{
         width:220px;
+    }
+
+}
+
+.producto-carrusel h3{
+    font-size:30px;
+    font-weight:700;
+    margin:15px 0 5px;
+}
+
+.producto-carrusel .precio{
+    font-size:30px;
+    font-weight:700;
+    margin:5px 0 15px;
+}
+
+.producto-carrusel .descripcion{
+    font-size:15px;
+    line-height:1.5;
+    max-width:420px;
+}
+
+
+.flecha{
+    flex-shrink:0;
+
+    width:60px;
+    height:60px;
+
+    border:none;
+    border-radius:50%;
+
+    background:rgba(46,125,50,.12);
+
+    color:#2e7d32;
+
+    font-size:45px;
+
+    cursor:pointer;
+
+    transition:all .3s ease;
+}
+
+.flecha:hover{
+    background:#2e7d32;
+    color:white;
+    transform:scale(1.08);
+}
+
+.producto-lateral{
+    width:180px;
+    height:300px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    opacity:.35;
+
+    overflow:hidden;
+
+    transition:all .4s ease;
+}
+
+.producto-lateral img{
+    width:180px;
+    height:180px;
+
+    object-fit:contain;
+
+    filter:blur(.3px);
+}
+
+.carrusel{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    gap:20px;
+
+    overflow:hidden;
+}
+
+.producto-principal{
+    flex:0 0 500px;
+}
+
+@media (max-width:768px){
+
+    .producto-lateral{
+        display:none;
+    }
+
+    .producto-principal{
+        flex:0 0 100%;
+        width:100%;
+    }
+
+    .carrusel{
+        gap:0;
     }
 
 }

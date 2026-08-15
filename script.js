@@ -126,47 +126,63 @@ function mostrarProducto(indice){
         productoActual = indice;
     }
 
-    const producto = productos[productoActual];
+    const anterior = document.getElementById("productoAnterior");
+    const principal = document.getElementById("productoPrincipal");
+    const siguiente = document.getElementById("productoSiguiente");
 
-    const contenedor = document.getElementById("productoPrincipal");
+    const indiceAnterior =
+        (productoActual - 1 + productos.length) % productos.length;
 
-    contenedor.innerHTML = `
+    const indiceSiguiente =
+        (productoActual + 1) % productos.length;
+
+    const productoAnteriorData = productos[indiceAnterior];
+    const productoActualData = productos[productoActual];
+    const productoSiguienteData = productos[indiceSiguiente];
+
+    anterior.innerHTML = `
+        <img
+            src="${productoAnteriorData.imagenes[0]}"
+            alt="${productoAnteriorData.nombre}">
+    `;
+
+    principal.innerHTML = `
 
         <div class="producto-carrusel">
 
             <img
-                src="${producto.imagenes[0]}"
-                alt="${producto.nombre}"
-                onclick="verDetalle('${producto.codigo}')">
+                src="${productoActualData.imagenes[0]}"
+                alt="${productoActualData.nombre}"
+                onclick="verDetalle('${productoActualData.codigo}')">
 
-            <p class="estado ${producto.estado}">
+            <p class="estado ${productoActualData.estado}">
                 ${
-                    producto.estado === "disponible"
+                    productoActualData.estado === "disponible"
                     ? "🟢 Disponible"
                     : "🔴 Agotado"
                 }
             </p>
 
-            <h3>${producto.nombre}</h3>
+            <h3>${productoActualData.nombre}</h3>
 
             <p class="descripcion">
-                ${producto.descripcion}
+                ${productoActualData.descripcion}
             </p>
 
             <p>
-                ⭐ ${producto.calificacion}/5
+                ⭐ ${productoActualData.calificacion}/5
             </p>
 
             <p>
-                Tamaño: ${producto.tamaño}
+                Tamaño: ${productoActualData.tamaño}
             </p>
 
             <p class="precio">
-                Q${producto.precio}
+                Q${productoActualData.precio}
             </p>
 
             ${
-                producto.estado === "agotado"
+                productoActualData.estado === "agotado"
 
                 ?
 
@@ -177,20 +193,27 @@ function mostrarProducto(indice){
                 :
 
                 `<button class="btn-pedido"
-                    onclick="abrirPedido('${producto.nombre}','${producto.codigo}')">
+                    onclick="abrirPedido('${productoActualData.nombre}','${productoActualData.codigo}')">
                     Hacer pedido
                 </button>`
             }
 
             <button
                 class="btn-copiar"
-                onclick="copiarInformacion('${producto.nombre}','${producto.codigo}','${producto.precio}')">
+                onclick="copiarInformacion('${productoActualData.nombre}','${productoActualData.codigo}','${productoActualData.precio}')">
                 📋 Copiar información
             </button>
 
         </div>
 
     `;
+
+    siguiente.innerHTML = `
+        <img
+            src="${productoSiguienteData.imagenes[0]}"
+            alt="${productoSiguienteData.nombre}">
+    `;
+
 }
 
 function productoAnterior(){
