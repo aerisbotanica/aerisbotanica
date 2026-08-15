@@ -104,72 +104,184 @@ document.querySelectorAll(".producto").forEach(function(producto){
     }
 
 });
+let productoActual = 0;
+
 function cargarProductos(){
 
-    let contenedor = document.getElementById("listaProductos");
-
-    contenedor.innerHTML = "";
-
-    productos.forEach(function(producto){
-
-        contenedor.innerHTML += `
-        <div class="producto" data-estado="${producto.estado}">
-
-    <img src="${producto.imagenes[0]}"
-onclick="verDetalle('${producto.codigo}')">
-
-    <p class="estado ${producto.estado}">
-        ${producto.estado === "disponible" ? "🟢 Disponible" : "🔴 Agotado"}
-    </p>
-
-    <h3>${producto.nombre}</h3>
-
-    <p class="descripcion">
-        ${producto.descripcion}
-    </p>
-
-    <p>
-        ⭐ ${producto.calificacion}/5
-    </p>
-
-    <p>
-        Tamaño: ${producto.tamaño}
-    </p>
-
-    <p class="precio">
-        Q${producto.precio}
-    </p>
-
-    ${
-        producto.estado === "agotado"
-
-        ?
-
-        `<button class="btn-pedido" disabled>Agotado</button>`
-
-        :
-
-        `<button class="btn-pedido"
-        onclick="abrirPedido('${producto.nombre}','${producto.codigo}')">
-
-        Hacer pedido
-
-        </button>
-        
-        <button class="btn-copiar"
-onclick="copiarInformacion('${producto.nombre}','${producto.codigo}','${producto.precio}')">
- Copiar información
-</button>`
-       
-    }
-
-</div>
-        `;
-
-    });
+    mostrarProducto(productoActual);
 
 }
 
+function mostrarProducto(indice){
+
+    if(productos.length === 0){
+        return;
+    }
+
+    if(indice < 0){
+        productoActual = productos.length - 1;
+    }else if(indice >= productos.length){
+        productoActual = 0;
+    }else{
+        productoActual = indice;
+    }
+
+    const anterior = document.getElementById("productoAnterior");
+    const principal = document.getElementById("productoPrincipal");
+    const siguiente = document.getElementById("productoSiguiente");
+
+    const indiceAnterior =
+        (productoActual - 1 + productos.length) % productos.length;
+
+    const indiceSiguiente =
+        (productoActual + 1) % productos.length;
+
+    const productoAnteriorData = productos[indiceAnterior];
+    const productoActualData = productos[productoActual];
+    const productoSiguienteData = productos[indiceSiguiente];
+
+    anterior.innerHTML = `
+        <img
+            src="${productoAnteriorData.imagenes[0]}"
+            alt="${productoAnteriorData.nombre}">
+    `;
+
+    principal.innerHTML = `
+
+        <div class="producto-carrusel">
+
+            <div class="imagen-producto">
+
+    <img
+        src="${productoActualData.imagenes[0]}"
+        alt="${productoActualData.nombre}"
+        onclick="alternarInformacionProducto()">
+
+    <button
+        class="copiar-imagen"
+        onclick="copiarInformacion(
+            '${productoActualData.nombre}',
+            '${productoActualData.codigo}',
+            '${productoActualData.precio}'
+        )">
+        📋
+    </button>
+
+    <div class="informacion-imagen">
+
+        <h3>${productoActualData.nombre}</h3>
+
+        <p class="precio">
+            Q${productoActualData.precio}
+        </p>
+
+        <div class="medidas">
+
+            <span>
+                <strong>Alto:</strong>
+                ${productoActualData.alto || productoActualData.tamaño}
+            </span>
+
+            <span>
+                <strong>Ancho:</strong>
+                ${productoActualData.ancho || "—"}
+            </span>
+
+        </div>
+
+        <p class="estado ${productoActualData.estado}">
+            ${
+                productoActualData.estado === "disponible"
+                ? "🟢 Disponible"
+                : "🔴 Agotado"
+            }
+        </p>
+
+        <p class="descripcion">
+            ${productoActualData.descripcion}
+        </p>
+
+        ${
+            productoActualData.estado === "agotado"
+
+            ?
+
+            `<button class="btn-pedido" disabled>
+                Agotado
+            </button>`
+
+            :
+
+            `<button
+                class="btn-pedido"
+                onclick="abrirPedido(
+                    '${productoActualData.nombre}',
+                    '${productoActualData.codigo}'
+                )">
+                🛒 Hacer pedido
+            </button>`
+        }
+
+        <button
+            class="btn-detalle"
+            onclick="verDetalle('${productoActualData.codigo}')">
+            Ver detalles
+        </button>
+
+    </div>
+
+</div>
+        </div>
+
+    `;
+
+    siguiente.innerHTML = `
+        <img
+            src="${productoSiguienteData.imagenes[0]}"
+            alt="${productoSiguienteData.nombre}">
+    `;
+
+}
+
+function productoAnterior(){
+
+    const contenedor = document.getElementById("productoPrincipal");
+
+    contenedor.classList.remove("salir-derecha");
+    contenedor.classList.remove("entrar-izquierda");
+
+    contenedor.classList.add("salir-izquierda");
+
+    setTimeout(function(){
+
+        mostrarProducto(productoActual - 1);
+
+        contenedor.classList.remove("salir-izquierda");
+        contenedor.classList.add("entrar-derecha");
+
+    }, 250);
+
+}
+
+function productoSiguiente(){
+
+    const contenedor = document.getElementById("productoPrincipal");
+
+    contenedor.classList.remove("salir-izquierda");
+    contenedor.classList.remove("entrar-derecha");
+
+    contenedor.classList.add("salir-derecha");
+
+    setTimeout(function(){
+
+        mostrarProducto(productoActual + 1);
+
+        contenedor.classList.remove("salir-derecha");
+        contenedor.classList.add("entrar-izquierda");
+
+    }, 250);
+
+}
 cargarProductos();
 
 function verDetalle(codigo){
@@ -219,5 +331,118 @@ Me interesa este terrario. 😊`;
 function toggleMenu(){
 
     document.querySelector(".header nav").classList.toggle("activo");
+
+}
+
+/* =========================================
+   CARRUSEL TOUCH PARA CELULAR
+   AERIS BOTÁNICA
+   ========================================= */
+
+let touchInicioX = 0;
+let touchFinX = 0;
+let moviendoTouch = false;
+
+const carruselTouch = document.querySelector(".carrusel");
+
+if (carruselTouch) {
+
+    carruselTouch.addEventListener("touchstart", function(event){
+
+        if (event.touches.length !== 1) return;
+
+        touchInicioX = event.touches[0].clientX;
+        moviendoTouch = true;
+
+    }, { passive: true });
+
+
+    carruselTouch.addEventListener("touchmove", function(event){
+
+        if (!moviendoTouch) return;
+
+        touchFinX = event.touches[0].clientX;
+
+    }, { passive: true });
+
+
+    carruselTouch.addEventListener("touchend", function(){
+
+        if (!moviendoTouch) return;
+
+        const diferencia = touchFinX - touchInicioX;
+
+        const distanciaMinima = 50;
+
+        if (Math.abs(diferencia) >= distanciaMinima) {
+
+            if (diferencia < 0) {
+
+                // Deslizar hacia la izquierda
+                productoSiguiente();
+
+            } else {
+
+                // Deslizar hacia la derecha
+                productoAnterior();
+
+            }
+
+        }
+
+        touchInicioX = 0;
+        touchFinX = 0;
+        moviendoTouch = false;
+
+    });
+
+}
+
+/* Ocultar aviso después de unos segundos */
+
+setTimeout(function(){
+
+    const aviso = document.getElementById("avisoTouch");
+
+    if(aviso){
+
+        aviso.style.transition = "opacity .6s ease, transform .6s ease";
+
+        aviso.style.opacity = "0";
+        aviso.style.transform = "translateY(-10px)";
+
+        setTimeout(function(){
+
+            aviso.remove();
+
+        }, 600);
+
+    }
+
+}, 4500);
+
+function alternarInformacionProducto(){
+
+    const informacion = document.querySelector(
+        ".producto-carrusel .informacion-imagen"
+    );
+
+    if(!informacion) return;
+
+    informacion.classList.toggle("visible");
+
+}
+
+function alternarInformacionProducto(){
+
+    const informacion = document.querySelector(
+        ".producto-carrusel .informacion-imagen"
+    );
+
+    if(!informacion){
+        return;
+    }
+
+    informacion.classList.toggle("visible");
 
 }

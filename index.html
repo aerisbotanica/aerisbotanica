@@ -51,22 +51,50 @@
 
 </section>
 <section id="catalogo">
-    <h2>Nuestros Terrarios</h2>
-    
-    
 
+    <h2>Terrarios</h2>
 
     <input
-    type="text"
-    id="buscar"
-    placeholder="🔍 Buscar terrario..."
-    onkeyup="buscarProducto()">
+        type="text"
+        id="buscar"
+        placeholder="🔍 Buscar terrario..."
+        onkeyup="buscarProducto()">
 
-    <div class="productos"
-    id="listaProductos">
-        
+    <div id="avisoTouch" class="aviso-touch">
+
+    <div class="aviso-icono">
+        👆
+    </div>
+
+    <div>
+        <strong>Explora nuestros terrarios</strong>
+        <p>Desliza hacia la izquierda o derecha para ver más.</p>
+    </div>
+
+</div>
+        <div class="carrusel">
+
+        <button class="flecha izquierda" onclick="productoAnterior()">
+            ‹
+        </button>
+
+       <div class="producto-lateral anterior" id="productoAnterior">
+</div>
+
+<div class="producto-principal" id="productoPrincipal">
+</div>
+
+<div class="producto-lateral siguiente" id="productoSiguiente">
+</div>
+
+        <button class="flecha derecha" onclick="productoSiguiente()">
+            ›
+        </button>
 
     </div>
+
+</section>
+
 <section id="cuidados">
 
 <h2>Guía de cuidados</h2>
