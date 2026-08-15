@@ -51,9 +51,6 @@ const productos = [
 
     descripcion:"Ideal para oficinas y espacios interiores.",
 
-    alto:"19 cm",
-    ancho:"12 cm",
-
     tamaño:"19 cm",
 
     calificacion:4

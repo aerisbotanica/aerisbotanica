@@ -104,189 +104,73 @@ document.querySelectorAll(".producto").forEach(function(producto){
     }
 
 });
-let productoActual = 0;
-
 function cargarProductos(){
 
-    mostrarProducto(productoActual);
+    let contenedor = document.getElementById("listaProductos");
 
-}
+    contenedor.innerHTML = "";
 
-function mostrarProducto(indice){
+    productos.forEach(function(producto){
 
-    if(productos.length === 0){
-        return;
-    }
+        contenedor.innerHTML += `
+        <div class="producto" data-estado="${producto.estado}">
 
-    if(indice < 0){
-        productoActual = productos.length - 1;
-    }else if(indice >= productos.length){
-        productoActual = 0;
-    }else{
-        productoActual = indice;
-    }
+    <img src="${producto.imagenes[0]}"
+onclick="verDetalle('${producto.codigo}')">
 
-    const anterior = document.getElementById("productoAnterior");
-    const principal = document.getElementById("productoPrincipal");
-    const siguiente = document.getElementById("productoSiguiente");
+    <p class="estado ${producto.estado}">
+        ${producto.estado === "disponible" ? "🟢 Disponible" : "🔴 Agotado"}
+    </p>
 
-    const indiceAnterior =
-        (productoActual - 1 + productos.length) % productos.length;
+    <h3>${producto.nombre}</h3>
 
-    const indiceSiguiente =
-        (productoActual + 1) % productos.length;
+    <p class="descripcion">
+        ${producto.descripcion}
+    </p>
 
-    const productoAnteriorData = productos[indiceAnterior];
-    const productoActualData = productos[productoActual];
-    const productoSiguienteData = productos[indiceSiguiente];
+    <p>
+        ⭐ ${producto.calificacion}/5
+    </p>
 
-    anterior.innerHTML = `
-        <img
-            src="${productoAnteriorData.imagenes[0]}"
-            alt="${productoAnteriorData.nombre}">
-    `;
+    <p>
+        Tamaño: ${producto.tamaño}
+    </p>
 
-    principal.innerHTML = `
+    <p class="precio">
+        Q${producto.precio}
+    </p>
 
-        <div class="producto-carrusel">
+    ${
+        producto.estado === "agotado"
 
-            <div class="imagen-producto">
+        ?
 
-    <img
-    class="foto-producto"
-    src="${productoActualData.imagenes[0]}"
-    alt="${productoActualData.nombre}">
+        `<button class="btn-pedido" disabled>Agotado</button>`
 
-    <button
-        class="copiar-imagen"
-        onclick="copiarInformacion(
-            '${productoActualData.nombre}',
-            '${productoActualData.codigo}',
-            '${productoActualData.precio}'
-        )">
-        📋
-    </button>
+        :
 
-    <div class="informacion-imagen">
+        `<button class="btn-pedido"
+        onclick="abrirPedido('${producto.nombre}','${producto.codigo}')">
 
-        <h3>${productoActualData.nombre}</h3>
+        Hacer pedido
 
-        <p class="precio">
-            Q${productoActualData.precio}
-        </p>
-
-        <div class="medidas">
-
-            <span>
-                <strong>Alto:</strong>
-                ${productoActualData.alto || productoActualData.tamaño}
-            </span>
-
-            <span>
-                <strong>Ancho:</strong>
-                ${productoActualData.ancho || "—"}
-            </span>
-
-        </div>
-
-        <p class="estado ${productoActualData.estado}">
-            ${
-                productoActualData.estado === "disponible"
-                ? "🟢 Disponible"
-                : "🔴 Agotado"
-            }
-        </p>
-
-        <p class="descripcion">
-            ${productoActualData.descripcion}
-        </p>
-
-        ${
-            productoActualData.estado === "agotado"
-
-            ?
-
-            `<button class="btn-pedido" disabled>
-                Agotado
-            </button>`
-
-            :
-
-            `<button
-                class="btn-pedido"
-                onclick="abrirPedido(
-                    '${productoActualData.nombre}',
-                    '${productoActualData.codigo}'
-                )">
-                🛒 Hacer pedido
-            </button>`
-        }
-
-        <button
-            class="btn-detalle"
-            onclick="verDetalle('${productoActualData.codigo}')">
-            Ver detalles
         </button>
-
-    </div>
+        
+        <button class="btn-copiar"
+onclick="copiarInformacion('${producto.nombre}','${producto.codigo}','${producto.precio}')">
+ Copiar información
+</button>`
+       
+    }
 
 </div>
-        </div>
+        `;
 
-    `;
-
-    siguiente.innerHTML = `
-        <img
-            src="${productoSiguienteData.imagenes[0]}"
-            alt="${productoSiguienteData.nombre}">
-    `;
+    });
 
 }
 
-function productoAnterior(){
-
-    const contenedor = document.getElementById("productoPrincipal");
-
-    contenedor.classList.remove("salir-derecha");
-    contenedor.classList.remove("entrar-izquierda");
-
-    contenedor.classList.add("salir-izquierda");
-
-    setTimeout(function(){
-
-        mostrarProducto(productoActual - 1);
-
-        contenedor.classList.remove("salir-izquierda");
-        contenedor.classList.add("entrar-derecha");
-
-    }, 250);
-
-}
-
-function productoSiguiente(){
-
-    const contenedor = document.getElementById("productoPrincipal");
-
-    contenedor.classList.remove("salir-izquierda");
-    contenedor.classList.remove("entrar-derecha");
-
-    contenedor.classList.add("salir-derecha");
-
-    setTimeout(function(){
-
-        mostrarProducto(productoActual + 1);
-
-        contenedor.classList.remove("salir-derecha");
-        contenedor.classList.add("entrar-izquierda");
-
-    }, 250);
-
-}
-document.addEventListener("DOMContentLoaded", function(){
-
-    cargarProductos();
-
-});
+cargarProductos();
 
 function verDetalle(codigo){
 
@@ -337,120 +221,3 @@ function toggleMenu(){
     document.querySelector(".header nav").classList.toggle("activo");
 
 }
-
-
-/* Ocultar aviso después de unos segundos */
-
-setTimeout(function(){
-
-    const aviso = document.getElementById("avisoTouch");
-
-    if(aviso){
-
-        aviso.style.transition = "opacity .6s ease, transform .6s ease";
-
-        aviso.style.opacity = "0";
-        aviso.style.transform = "translateY(-10px)";
-
-        setTimeout(function(){
-
-            aviso.remove();
-
-        }, 600);
-
-    }
-
-}, 4500);
-
-
-function alternarInformacionProducto(){
-
-    const informacion = document.querySelector(
-        ".producto-carrusel .informacion-imagen"
-    );
-
-    if(!informacion){
-
-        console.log("No se encontró la información del producto.");
-
-        return;
-    }
-
-    informacion.classList.toggle("visible");
-
-}
-
-/* =========================================
-   TOUCH DEL CATÁLOGO
-   ========================================= */
-
-let inicioX = 0;
-let inicioY = 0;
-
-document.addEventListener("touchstart", function(event){
-
-    const foto = event.target.closest(".foto-producto");
-
-    if(!foto){
-        return;
-    }
-
-    inicioX = event.touches[0].clientX;
-    inicioY = event.touches[0].clientY;
-
-}, {passive:true});
-
-
-document.addEventListener("touchend", function(event){
-
-    const foto = event.target.closest(".foto-producto");
-
-    if(!foto){
-        return;
-    }
-
-    const finalX = event.changedTouches[0].clientX;
-    const finalY = event.changedTouches[0].clientY;
-
-    const diferenciaX = finalX - inicioX;
-    const diferenciaY = finalY - inicioY;
-
-    /*
-       Si prácticamente no hubo movimiento,
-       se considera un TOQUE.
-    */
-
-    if(
-        Math.abs(diferenciaX) < 30 &&
-        Math.abs(diferenciaY) < 30
-    ){
-
-        alternarInformacionProducto();
-
-        return;
-    }
-
-    /*
-       Si hubo movimiento horizontal,
-       se considera DESLIZAMIENTO.
-    */
-
-    if(Math.abs(diferenciaX) > Math.abs(diferenciaY)){
-
-        if(Math.abs(diferenciaX) > 50){
-
-            if(diferenciaX < 0){
-
-                productoSiguiente();
-
-            }else{
-
-                productoAnterior();
-
-            }
-
-        }
-
-    }
-
-});
