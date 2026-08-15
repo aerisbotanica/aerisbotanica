@@ -975,3 +975,236 @@ footer p{
     }
 
 }
+
+
+
+/* =========================================
+   OPTIMIZACIÓN FINAL PARA CELULARES
+   AERIS BOTÁNICA
+   ========================================= */
+
+@media (max-width: 768px){
+
+    /* ENCABEZADO */
+    .header{
+        padding:10px 15px;
+        min-height:60px;
+    }
+
+    .marca{
+        width:100%;
+        justify-content:center;
+        gap:8px;
+    }
+
+    .marca img{
+        width:42px;
+        height:42px;
+    }
+
+    .header h1{
+        font-size:22px;
+    }
+
+    .menu-btn{
+        width:40px;
+        height:40px;
+        font-size:20px;
+        margin-top:5px;
+    }
+
+    /* PORTADA */
+    .portada{
+        min-height:420px;
+        padding:30px 15px;
+    }
+
+    .portada h2{
+        font-size:30px;
+        line-height:1.2;
+    }
+
+    .portada p{
+        font-size:16px;
+        line-height:1.5;
+        margin-bottom:20px;
+    }
+
+    .portada button{
+        padding:12px 25px;
+        font-size:16px;
+    }
+
+    /* CATÁLOGO */
+    #catalogo{
+        padding:25px 8px;
+    }
+
+    #catalogo h2{
+        font-size:25px;
+        margin-bottom:5px;
+    }
+
+    /* CARRUSEL */
+    .carrusel{
+        width:100%;
+        min-height:540px;
+        padding:15px 0;
+        gap:0;
+    }
+
+    .producto-principal{
+        flex:1 1 auto;
+        width:100%;
+        min-height:500px;
+        padding:0 45px;
+    }
+
+    .producto-carrusel{
+        width:100%;
+    }
+
+    .producto-carrusel img{
+        width:min(72vw,280px);
+        height:min(72vw,280px);
+        max-width:280px;
+        max-height:280px;
+    }
+
+    .producto-carrusel h3{
+        font-size:22px;
+        margin:10px 0 5px;
+    }
+
+    .producto-carrusel .descripcion{
+        width:100%;
+        max-width:280px;
+        font-size:14px;
+        line-height:1.4;
+    }
+
+    .producto-carrusel .precio{
+        font-size:24px;
+        margin:8px 0;
+    }
+
+    /* FLECHAS */
+    .flecha{
+        width:40px;
+        height:40px;
+        min-width:40px;
+        font-size:28px;
+        z-index:5;
+    }
+
+    /* BOTONES */
+    .botones{
+        width:100%;
+        max-width:280px;
+        flex-direction:column;
+        gap:8px;
+    }
+
+    .botones button,
+    .btn-pedido,
+    .btn-copiar{
+        width:100%;
+        padding:10px;
+        font-size:15px;
+    }
+
+    /* BUSCADOR */
+    #buscar{
+        width:92%;
+        font-size:15px;
+    }
+
+    /* SECCIONES */
+    #cuidados,
+    #entregas{
+        padding:35px 12px;
+    }
+
+    .cuidados,
+    .puntos{
+        gap:15px;
+    }
+
+    .cuidados div,
+    .puntos div{
+        width:100%;
+        max-width:320px;
+    }
+
+    /* NOSOTROS */
+    #nosotros{
+        margin:35px auto;
+        padding:15px;
+    }
+
+    #nosotros p{
+        font-size:16px;
+        line-height:1.6;
+    }
+
+    /* MODAL DE PEDIDO */
+    .modal{
+        padding:15px;
+    }
+
+    .formulario{
+        width:100%;
+        max-width:360px;
+        padding:20px;
+        border-radius:12px;
+    }
+
+    .formulario input,
+    .formulario select{
+        font-size:16px;
+        padding:11px;
+    }
+
+    /* VISOR DE IMAGEN */
+    .visor img{
+        max-width:94%;
+        max-height:80%;
+    }
+
+    #cerrarVisor{
+        top:15px;
+        right:20px;
+        font-size:35px;
+    }
+
+    /* DETALLE DEL PRODUCTO */
+    .detalle{
+        width:100%;
+        padding:20px 15px;
+        gap:20px;
+    }
+
+    .galeria{
+        width:100%;
+    }
+
+    .galeria img{
+        width:100%;
+        max-height:400px;
+        object-fit:contain;
+    }
+
+    .info{
+        width:100%;
+    }
+
+    .info .precio{
+        font-size:28px;
+    }
+
+    /* FOOTER */
+    footer{
+        padding:30px 15px;
+    }
+
+}
