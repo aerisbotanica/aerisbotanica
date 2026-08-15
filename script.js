@@ -104,157 +104,72 @@ document.querySelectorAll(".producto").forEach(function(producto){
     }
 
 });
-let productoActual = 0;
-
 function cargarProductos(){
 
-    mostrarProducto(productoActual);
+    let contenedor = document.getElementById("listaProductos");
 
-}
+    contenedor.innerHTML = "";
 
-function mostrarProducto(indice){
+    productos.forEach(function(producto){
 
-    if(productos.length === 0){
-        return;
+        contenedor.innerHTML += `
+        <div class="producto" data-estado="${producto.estado}">
+
+    <img src="${producto.imagenes[0]}"
+onclick="verDetalle('${producto.codigo}')">
+
+    <p class="estado ${producto.estado}">
+        ${producto.estado === "disponible" ? "🟢 Disponible" : "🔴 Agotado"}
+    </p>
+
+    <h3>${producto.nombre}</h3>
+
+    <p class="descripcion">
+        ${producto.descripcion}
+    </p>
+
+    <p>
+        ⭐ ${producto.calificacion}/5
+    </p>
+
+    <p>
+        Tamaño: ${producto.tamaño}
+    </p>
+
+    <p class="precio">
+        Q${producto.precio}
+    </p>
+
+    ${
+        producto.estado === "agotado"
+
+        ?
+
+        `<button class="btn-pedido" disabled>Agotado</button>`
+
+        :
+
+        `<button class="btn-pedido"
+        onclick="abrirPedido('${producto.nombre}','${producto.codigo}')">
+
+        Hacer pedido
+
+        </button>
+        
+        <button class="btn-copiar"
+onclick="copiarInformacion('${producto.nombre}','${producto.codigo}','${producto.precio}')">
+ Copiar información
+</button>`
+       
     }
 
-    if(indice < 0){
-        productoActual = productos.length - 1;
-    }else if(indice >= productos.length){
-        productoActual = 0;
-    }else{
-        productoActual = indice;
-    }
+</div>
+        `;
 
-    const anterior = document.getElementById("productoAnterior");
-    const principal = document.getElementById("productoPrincipal");
-    const siguiente = document.getElementById("productoSiguiente");
-
-    const indiceAnterior =
-        (productoActual - 1 + productos.length) % productos.length;
-
-    const indiceSiguiente =
-        (productoActual + 1) % productos.length;
-
-    const productoAnteriorData = productos[indiceAnterior];
-    const productoActualData = productos[productoActual];
-    const productoSiguienteData = productos[indiceSiguiente];
-
-    anterior.innerHTML = `
-        <img
-            src="${productoAnteriorData.imagenes[0]}"
-            alt="${productoAnteriorData.nombre}">
-    `;
-
-    principal.innerHTML = `
-
-        <div class="producto-carrusel">
-
-            <img
-                src="${productoActualData.imagenes[0]}"
-                alt="${productoActualData.nombre}"
-                onclick="verDetalle('${productoActualData.codigo}')">
-
-            <p class="estado ${productoActualData.estado}">
-                ${
-                    productoActualData.estado === "disponible"
-                    ? "🟢 Disponible"
-                    : "🔴 Agotado"
-                }
-            </p>
-
-            <h3>${productoActualData.nombre}</h3>
-
-            <p class="descripcion">
-                ${productoActualData.descripcion}
-            </p>
-
-            <p>
-                ⭐ ${productoActualData.calificacion}/5
-            </p>
-
-            <p>
-                Tamaño: ${productoActualData.tamaño}
-            </p>
-
-            <p class="precio">
-                Q${productoActualData.precio}
-            </p>
-
-            ${
-                productoActualData.estado === "agotado"
-
-                ?
-
-                `<button class="btn-pedido" disabled>
-                    Agotado
-                </button>`
-
-                :
-
-                `<button class="btn-pedido"
-                    onclick="abrirPedido('${productoActualData.nombre}','${productoActualData.codigo}')">
-                    Hacer pedido
-                </button>`
-            }
-
-            <button
-                class="btn-copiar"
-                onclick="copiarInformacion('${productoActualData.nombre}','${productoActualData.codigo}','${productoActualData.precio}')">
-                📋 Copiar información
-            </button>
-
-        </div>
-
-    `;
-
-    siguiente.innerHTML = `
-        <img
-            src="${productoSiguienteData.imagenes[0]}"
-            alt="${productoSiguienteData.nombre}">
-    `;
+    });
 
 }
 
-function productoAnterior(){
-
-    const contenedor = document.getElementById("productoPrincipal");
-
-    contenedor.classList.remove("salir-derecha");
-    contenedor.classList.remove("entrar-izquierda");
-
-    contenedor.classList.add("salir-izquierda");
-
-    setTimeout(function(){
-
-        mostrarProducto(productoActual - 1);
-
-        contenedor.classList.remove("salir-izquierda");
-        contenedor.classList.add("entrar-derecha");
-
-    }, 250);
-
-}
-
-function productoSiguiente(){
-
-    const contenedor = document.getElementById("productoPrincipal");
-
-    contenedor.classList.remove("salir-izquierda");
-    contenedor.classList.remove("entrar-derecha");
-
-    contenedor.classList.add("salir-derecha");
-
-    setTimeout(function(){
-
-        mostrarProducto(productoActual + 1);
-
-        contenedor.classList.remove("salir-derecha");
-        contenedor.classList.add("entrar-izquierda");
-
-    }, 250);
-
-}
 cargarProductos();
 
 function verDetalle(codigo){
