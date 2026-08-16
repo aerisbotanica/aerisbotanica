@@ -95,7 +95,7 @@ const productos = [
     nombre: "Jade",
     precio: 75,
     codigo: "TR006",
-    estado: "disponible",
+    estado: "agotado",
     categoria: "Abierto",
 
     imagenes:[
@@ -113,7 +113,7 @@ const productos = [
     nombre: "Nativa",
     precio: 75,
     codigo: "TR007",
-    estado: "disponible",
+    estado: "agotado",
     categoria: "Abierto",
 
     imagenes:[
