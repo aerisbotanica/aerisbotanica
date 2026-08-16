@@ -77,7 +77,7 @@ const productos = [
     nombre: "Aurora",
     precio: 75,
     codigo: "TR005",
-    estado: "disponible",
+    estado: "agotado",
     categoria: "Abierto",
 
     imagenes:[
